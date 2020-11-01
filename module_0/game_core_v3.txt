@@ -1,0 +1,19 @@
+def game_core_v3(number):
+    '''Сначала устанавливаем любое random число, а потом снова устанавливаем любое random число в уменьшенном диапазоне.
+       Функция принимает загаданное число и возвращает число попыток'''
+    min_range = 0
+    max_range = 101
+    count = 1
+    predict = np.random.randint(min_range+1,max_range)
+    while number != predict:
+        count+=1
+        predict = np.random.randint(min_range+1,max_range)
+        if number > predict: 
+            min_range = predict
+            print(min_range+1,max_range,number)
+        elif number < predict: 
+            max_range = predict
+            print(min_range+1,max_range,number)
+    return(count) # выход из цикла, если угадали
+
+game_core_v3(number)
