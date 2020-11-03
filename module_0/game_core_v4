@@ -1,0 +1,36 @@
+import numpy as np
+count = 0                            # счетчик попыток
+number = np.random.randint(1,101)    # загадали число
+
+def score_game(game_core):
+    '''Запускаем игру 1000 раз, чтобы узнать, как быстро игра угадывает число'''
+    count_ls = []
+    np.random.seed(1)  # фиксируем RANDOM SEED, чтобы ваш эксперимент был воспроизводим!
+    random_array = np.random.randint(1,101, size=(1000))
+    for number in random_array:
+        count_ls.append(game_core(number))
+    score = int(np.mean(count_ls))
+    print(f"Ваш алгоритм угадывает число в среднем за {score} попыток")
+    return(score)
+	
+def game_core_v4(number):
+    '''Всегда начинаем угадывать число с 50, так как оно имеет одинаковый диапазон до 1 и 100.
+        Функция принимает загаданное число и возвращает число попыток'''
+    min_range = 0
+    max_range = 101
+    count = 1
+    predict = 50
+    while number != predict:
+        
+        if number > predict: 
+            min_range = predict #становится нижней или верхней границей диапазона загадывания
+            predict = int((min_range+max_range) / 2)
+            count += 1
+            
+        elif number < predict: 
+            max_range = predict
+            predict = int((min_range+max_range) / 2) #predict принимается равным середине нового диапазона
+            count += 1
+            
+            
+    return(count) # выход из цикла, если угадали	
